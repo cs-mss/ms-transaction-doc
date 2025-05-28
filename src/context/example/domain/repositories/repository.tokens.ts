@@ -3,5 +3,5 @@
  * Estos tokens se utilizan para identificar los repositorios en el contenedor de inyección de dependencias
  */
 export const REPOSITORY_TOKENS = {
-  EXAMPLE_REPOSITORY: 'ExampleRepository',
+  DOCUMENT_REPOSITORY: 'DocumentRepository',
 };

@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 
 import { AppModule } from './context/shared/infrastructure/modules/app.module';
 import { ResponseInterceptor } from './app/interceptors/response.interceptor';
+import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -28,6 +29,21 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResponseInterceptor());
 
   app.enableCors();
+
+  app.connectMicroservice({
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        clientId: process.env.KAFKA_CLIENT_ID,
+        brokers: (process.env.KAFKA_BROKERS as string).split(','),
+      },
+      consumer: {
+        groupId: process.env.KAFKA_GROUP_ID,
+      },
+    },
+  });
+
+  await app.startAllMicroservices();
 
   const configService = app.get(ConfigService);
 

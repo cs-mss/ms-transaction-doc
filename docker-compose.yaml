@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/local/Dockerfile
-    container_name: hex-ddd-app
+    container_name: ms-transaction-doc
     volumes:
       - ./:/app
       - /app/node_modules
